@@ -1,10 +1,10 @@
 package solutions.다이나믹프로그래밍.호텔_1106.경현;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
-import java.io.IOException;
 
 public class S1_1106 {
 

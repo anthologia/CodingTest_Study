@@ -1,7 +1,11 @@
 package solutions.그래프.촌수계산_2644.경현;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class S3_2644 {
 	public static int arr[][];

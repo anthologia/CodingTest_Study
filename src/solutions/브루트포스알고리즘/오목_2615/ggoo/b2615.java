@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
+public class b2615 {
 
     static int[][] data;
     static int[] dr = {-1, 0, 1, 1};

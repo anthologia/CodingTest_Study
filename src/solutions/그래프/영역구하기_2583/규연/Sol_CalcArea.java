@@ -96,7 +96,5 @@ public class Sol_CalcArea {
         Source s = new Source(new BufferedReader(new InputStreamReader(System.in)));
         Solution solution = new Solution();
         solution.solution(s.M, s.N, s.boxPoints);
-
-
     }
 }

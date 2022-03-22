@@ -1,6 +1,6 @@
 package solutions.카카오.광고삽입.경현;
 
-class programmers {
+class  programmers {
     public String solution(String play_time, String adv_time, String[] logs) {
         int play_len = timeToInt(play_time);
         int adv_len = timeToInt(adv_time);

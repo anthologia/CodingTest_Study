@@ -24,7 +24,7 @@ public class Sol_DragonAndDungeon {
         public Source(BufferedReader br) throws IOException {
             StringTokenizer st = new StringTokenizer(br.readLine());
             n = Integer.parseInt(st.nextToken());
-            hatk = Long.parseLong(st.nextToken());
+            hatk = Integer.parseInt(st.nextToken());
             dungeon = new Room[n];
             for (int i = 0; i < n; i++) {
                 dungeon[i] = new Room(
@@ -52,7 +52,7 @@ public class Sol_DragonAndDungeon {
             for (Room room : dungeon) {
                 if (room.t == 1) {
                     int attackTime = (int) Math.ceil((double) room.h / hatk) - 1;
-                    currHp -= room.a * attackTime;
+                    currHp -= (long) room.a * attackTime;
                     if (currHp >= 0) return false;
                 } else {
                     hatk += room.a;

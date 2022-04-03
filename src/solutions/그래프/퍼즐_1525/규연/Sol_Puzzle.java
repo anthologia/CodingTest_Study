@@ -19,7 +19,7 @@ public class Sol_Puzzle {
     }
 
     static class Solution {
-
+        String result = "123456780";
         public void solution(int[][] board) {
 
         }

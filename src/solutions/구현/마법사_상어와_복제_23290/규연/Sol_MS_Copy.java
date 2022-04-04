@@ -34,35 +34,111 @@ public class Sol_MS_Copy {
         int x;
         int y;
         int d;
-        boolean smell;
+        int smellCount;
 
         public Fish(int[] info) {
             this.x = info[0];
             this.y = info[1];
             if (info.length > 2) this.d = info[2];
-            this.smell = false;
+            this.smellCount = 0;
         }
     }
 
     static class Solution {
         List<Fish>[][] board;
-        int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
-        int[] dy = {0, -1, -1, -1, 0, 1, 1, 1};
+        Fish shark;
+        int[] dx = {0, -1, -1, -1, 0, 1, 1, 1};
+        int[] dy = {-1, -1, 0, 1, 1, 1, 0, -1};
+        int[] sx = {-1, 0, 1, 0};
+        int[] sy = {0, -1, 0, 1};
+        int fishCount = 0;
+        int ate = Integer.MAX_VALUE;
 
         public void solution(int m, int s, Fish[] fishInfo, Fish shark) {
-            board = initBoard(fishInfo, shark);
+            this.shark = shark;
+            board = initBoard(fishInfo);
             for (int i = 0; i < s; i++) {
                 List<Fish> movedFishInfo = new ArrayList<>();
                 for (Fish fish : fishInfo) {
                     int[] info = new int[]{fish.x, fish.y, rotateDirection(fish, shark)};
                     movedFishInfo.add(new Fish(info));
                 }
+                List<Fish>[][] movedBoard = initBoard(movedFishInfo.toArray(Fish[]::new));
+                findPossibleToEat(movedBoard, shark, 0, "");
+//                eatFish(movedBoard);
 
-                List<Fish>[][] movedBoard = initBoard(movedFishInfo.toArray(Fish[]::new), shark);
-
-
+//                deleteSmell(board);
+//                deleteSmell(movedBoard);
+//
+//                copyBoard(movedBoard);
             }
+            int result = 0;
+            for (int i = 1; i <= 4; i++) {
+                for (int j = 1; j <= 4; j++) {
+                    for (Fish fish : board[i][j]) {
+                        if (fish.smellCount == 0) result++;
+                    }
+                }
+            }
+            System.out.println(result);
+        }
 
+        private void eatFish(List<Fish>[][] movedBoard) {
+            for (int i = 0; i < 3; i++) {
+                int d = (int) (ate / Math.pow(10, 2 - i));
+                for (Fish fish : movedBoard[shark.x + sx[d - 1]][shark.y + sy[d - 1]]) {
+                    fish.smellCount++;
+                }
+            }
+        }
+
+        private void copyBoard(List<Fish>[][] movedBoard) {
+            for (int i = 1; i <= 4; i++) {
+                for (int j = 1; j <= 4; j++) {
+                    board[i][j].addAll(movedBoard[i][j]);
+                }
+            }
+        }
+
+        private void deleteSmell(List<Fish>[][] board) {
+            for (int i = 1; i <= 4; i++) {
+                for (int j = 1; j <= 4; j++) {
+                    board[i][j].removeIf(fish -> fish.smellCount == 2);
+                }
+            }
+        }
+
+        private void findPossibleToEat(List<Fish>[][] board, Fish shark, int fishCnt, String directions) {
+            if (directions.length() == 3) {
+                if (fishCnt > fishCount) {
+                    fishCount = fishCnt;
+                    ate = Integer.parseInt(directions);
+                } else if (fishCnt == fishCount) {
+                    System.out.println("ate = " + ate);
+                    System.out.println("Integer.parseInt(directions) = " + Integer.parseInt(directions));
+                    ate = Math.min(ate, Integer.parseInt(directions));
+                }
+                return;
+            }
+            for (int i = 0; i < 4; i++) {
+                int nx = shark.x + sx[i];
+                int ny = shark.y + sy[i];
+                if (!isIn(nx, ny)) continue;
+                int possibleToEat = board[nx][ny].size();
+
+                fishCnt += possibleToEat;
+                directions += (i + 1);
+
+                findPossibleToEat(board, shark, fishCnt, directions);
+
+                fishCnt -= possibleToEat;
+                directions.substring(0, directions.length() - 1);
+            }
+        }
+
+        private int rollBack(List<Fish>[][] board, int fishCnt, int di) {
+
+            return fishCnt;
         }
 
         private int rotateDirection(Fish fish, Fish shark) {
@@ -76,11 +152,12 @@ public class Sol_MS_Copy {
                 if (direction == 1) direction = 8;
                 else direction--;
             }
+            System.out.println(direction);
             return direction;
         }
 
         private boolean isIn(int x, int y) {
-            return x >= 0 && x < 4 && y >= 0 && y < 4;
+            return x >= 1 && x < 5 && y >= 1 && y < 5;
         }
 
         private boolean isShark(int x, int y, Fish shark) {
@@ -88,13 +165,19 @@ public class Sol_MS_Copy {
         }
 
         private boolean isSmell(int x, int y) {
-            return board[x][y].size() != 0 && board[x][y].get(0).smell;
+            return board[x][y].size() != 0 && board[x][y].get(0).smellCount != 0;
         }
 
-        private List<Fish>[][] initBoard(Fish[] fishInfo, Fish shark) {
-            List<Fish>[][] board = new ArrayList[4][4];
-            Arrays.fill(board, new ArrayList<>());
-            Arrays.stream(fishInfo).forEach(fish -> board[fish.x][fish.y].add(fish));
+        private List<Fish>[][] initBoard(Fish[] fishInfo) {
+            List<Fish>[][] board = new ArrayList[5][5];
+            for (int i = 1; i <= 4; i++) {
+                for (int j = 1; j <= 4; j++) {
+                    board[i][j] = new ArrayList<>();
+                }
+            }
+            for (Fish fish : fishInfo) {
+                board[fish.x][fish.y].add(fish);
+            }
             board[shark.x][shark.y].add(shark);
             return board;
         }

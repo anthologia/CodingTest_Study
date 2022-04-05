@@ -1,7 +1,8 @@
 # 📌 인프런 코딩 테스트 스터디
 |이름|언어|티어|
 |:------:|:---:|:---:|
-|[이규연](https://github.com/Leeky0615)|java|[![Solved.ac프로필](http://mazassumnida.wtf/api/mini/generate_badge?boj=rbdus7174)](https://github.com/mazassumnida/mazassumnida)|
+|[이규연](https://github.com/Leeky0615)|Java|[![Solved.ac프로필](http://mazassumnida.wtf/api/mini/generate_badge?boj=rbdus7174)](https://github.com/mazassumnida/mazassumnida)|
+|[평주영](https://github.com/anthologia)|Java|[![Solved.ac프로필](http://mazassumnida.wtf/api/mini/generate_badge?boj=anthologia)](https://github.com/mazassumnida/mazassumnida)|
 
 <br/><br/>
 
